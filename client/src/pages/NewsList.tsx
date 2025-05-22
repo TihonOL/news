@@ -16,7 +16,7 @@ const NewsList = () => {
       .catch(console.log);
   }, []);
 
-  console.log(news);
+  // console.log(news);
 
   const whitelistTags = mockUser.tags.whitelist;
   const blacklistTags = mockUser.tags.blacklist;

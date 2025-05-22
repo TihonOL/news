@@ -10,10 +10,10 @@ class NewsService {
 
   static findNewsById = async (id) => {
     const newsBiId = await News.findByPk(id);
+    // console.log(newsBiId);
     if (!newsBiId) {
       throw new Error('Student not found');
     }
-    console.log(newsBiId);
     return newsBiId;
   };
 }

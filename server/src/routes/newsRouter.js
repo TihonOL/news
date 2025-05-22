@@ -7,6 +7,4 @@ newsRouter.route('/').get(newsController.getAllNews);
 
 newsRouter.route('/:id').get(newsController.getNewsById);
 
-
-
 module.exports = newsRouter;

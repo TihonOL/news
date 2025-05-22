@@ -4,15 +4,27 @@ import BiasBar from '@/components/news/BiasBar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const NewsDetail = () => {
   const [newsId, setNewsId] = useState([]);
-  
   const { id } = useParams<{ id: string }>();
-  const news = mockNews.find((n) => n.id === id);
 
-  if (!news) {
+  useEffect(() => {
+    axios
+      .get(`/api/news/${id}`)
+      .then((res) => setNewsId(res.data))
+      .catch(console.log);
+  }, [id]);
+
+  console.log(newsId.title);
+  console.log(newsId.original_date);
+
+  const news = mockNews.find((n) => n.id === id);
+  console.log(newsId);
+
+  if (!newsId) {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold mb-4">News article not found</h2>
@@ -28,35 +40,52 @@ const NewsDetail = () => {
       <Button variant="ghost" asChild className="mb-6">
         <Link to="/news">
           <ArrowLeft size={16} className="mr-2" />
-          Back to News
+          Вернуться к новостной ленте
         </Link>
       </Button>
 
       <h1 className="text-3xl font-bold mb-4">{news.title}</h1>
 
       <p className="text-muted-foreground mb-6">
-        {new Date(news.date).toLocaleDateString('en-US', {
+        {newsId.original_date}
+        {/* {new Date(news.date).toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric',
           year: 'numeric',
-        })}
+        })} */}
       </p>
 
-      {news.imageUrl && (
+      {newsId.imageURL && (
         <img
-          src={news.imageUrl}
-          alt={news.title}
+          src={newsId.imageURL}
+          alt={newsId.title}
           className="w-full h-64 object-cover rounded-lg mb-6"
         />
       )}
 
-      <p className="text-lg mb-8">{news.summary}</p>
+      <p className="text-lg mb-8">{newsId.text}</p>
 
       <Separator className="my-8" />
 
-      <div className="mb-8">
+      <div className="flex justify-between items-center gap-4">
+        {/* Желтая кнопка "нравится" */}
+        <Button
+          variant="default"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white"
+        >
+          <Link to="#">Добавить в избранное</Link>
+        </Button>
+
+        {/* Красная кнопка "в черный список" */}
+        <Button variant="default" className="bg-red-500 hover:bg-red-600 text-white">
+          <Link to="#">Внести в черный список</Link>
+        </Button>
+      </div>
+
+      {/* <div className="mb-8">
         <h3 className="section-heading">Действие</h3>
         <ul className="space-y-2">
+          
           {news.sources.map((source, index) => (
             <li key={index} className="flex items-center gap-2">
               <a
@@ -71,7 +100,7 @@ const NewsDetail = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
 
       <div className="mb-8">
         <h3 className="section-heading">Political Bias</h3>
