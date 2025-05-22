@@ -17,6 +17,7 @@ class NewsController {
     try {
       const { id } = req.params;
       const targetNews = await NewsService.findNewsById(id);
+      // console.log(targetNews);
       res.json(targetNews);
     } catch (error) {
       console.log(error);
