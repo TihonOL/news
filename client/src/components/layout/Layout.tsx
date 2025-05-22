@@ -1,17 +1,27 @@
-
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
+import SpinnerUi from '../ui/spinnerUi'
 
-const Layout = ({logoutHandler, user}) => {
-
+const Layout = ({ logoutHandler, user }) => {
   
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 content-container">
-        <Outlet />
-      </main>
-    </div>
+    <>
+      {user.status === 'fetching' ? (
+        <div className="min-h-screen flex flex-col">
+          <Navbar logoutHandler={logoutHandler} user={user} />
+          <main className="flex-1 content-container">
+            <SpinnerUi/>
+          </main>
+        </div>
+      ) : (
+        <div className="min-h-screen flex flex-col">
+          <Navbar logoutHandler={logoutHandler} user={user} />
+          <main className="flex-1 content-container">
+            <Outlet />
+          </main>
+        </div>
+      )}
+    </>
   );
 };
 
