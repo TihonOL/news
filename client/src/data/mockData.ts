@@ -2,9 +2,9 @@
 import { News, User } from "@/types/news";
 
 export const popularCategories = [
-  "Politics", "Environment", "Science", "World", 
-  "Business", "Health", "Economy", "Sports", 
-  "Technology", "Entertainment", "Education", "Art"
+  "Политика", "Экология", "Наука", "Международные новости", 
+  "Бизнес", "Здоровье", "Экономика", "Спорт", 
+  "Технологии", "Развлечения", "Образование", "Искусство"
 ];
 
 export const mockNews: News[] = [

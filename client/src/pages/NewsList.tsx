@@ -1,9 +1,8 @@
-
-import { useMemo } from "react";
-import { mockNews, mockUser } from "@/data/mockData";
-import NewsCard from "@/components/news/NewsCard";
-import { News } from "@/types/news";
-import { Separator } from "@/components/ui/separator";
+import { useMemo } from 'react';
+import { mockNews, mockUser } from '@/data/mockData';
+import NewsCard from '@/components/news/NewsCard';
+import { News } from '@/types/news';
+import { Separator } from '@/components/ui/separator';
 
 const NewsList = () => {
   const whitelistTags = mockUser.tags.whitelist;
@@ -11,14 +10,13 @@ const NewsList = () => {
 
   const filteredNews = useMemo(() => {
     return mockNews
-      .filter(news => {
-        // If there are whitelist tags, at least one news tag must be in the whitelist
-        const hasWhitelistMatch = whitelistTags.length === 0 || 
-          news.tags.some(tag => whitelistTags.includes(tag));
-          
-        // News must not have any tags that are in the blacklist
-        const hasBlacklistMatch = news.tags.some(tag => blacklistTags.includes(tag));
-        
+      .filter((news) => {
+        const hasWhitelistMatch =
+          whitelistTags.length === 0 ||
+          news.tags.some((tag) => whitelistTags.includes(tag));
+
+        const hasBlacklistMatch = news.tags.some((tag) => blacklistTags.includes(tag));
+
         return hasWhitelistMatch && !hasBlacklistMatch;
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -29,22 +27,22 @@ const NewsList = () => {
       <h1 className="text-3xl font-bold mb-2">News</h1>
       {whitelistTags.length > 0 && (
         <p className="text-muted-foreground mb-8">
-          Filtered by tags: {whitelistTags.join(", ")}
+          Filtered by tags: {whitelistTags.join(', ')}
         </p>
       )}
 
       <Separator className="my-6" />
-      
+
       {filteredNews.length > 0 ? (
         <div className="space-y-6">
-          {filteredNews.map(news => (
+          {filteredNews.map((news) => (
             <NewsCard key={news.id} news={news} />
           ))}
         </div>
       ) : (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
-            No news found matching your filter criteria.
+            Нет новостей, подходящих под выбранные фильтры.
           </p>
         </div>
       )}
