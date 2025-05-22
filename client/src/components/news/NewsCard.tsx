@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
 
-const NewsCard = ({ news }) => {
+import { News } from '@/types/news';
+
+type NewsCardProps = {
+  news: News;
+};
+
+const NewsCard = ({ news }: NewsCardProps) => {
+  // console.log(news);
+
 
   return (
     <Link to={`/news/${news.id}`} className="block">
@@ -8,25 +16,31 @@ const NewsCard = ({ news }) => {
         <div>
           <h3 className="text-xl font-medium mb-2">{news.title}</h3>
           <p className="text-muted-foreground text-sm">
-            {/* {new Date(news.date).toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
+
+            {news.original_date}
+            {/* {new Date(news.date).toLocaleDateString('en-US', { 
+              month: 'short', 
+              day: 'numeric', 
+              year: 'numeric' 
             })} */}
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
-            {news.tags?.map((tag) => (
+            {/* {news.tags.map((tag) => (
+
               <span key={tag} className="text-xs bg-secondary px-2 py-1 rounded">
                 {tag}
               </span>
-            ))}
+            ))} */}
+            {`${news.text.slice(0, 50)}...`}
           </div>
         </div>
 
         {news.imageURL && (
           <div className="flex-shrink-0">
             <img
-              src={news.imageUrl}
+
+              src={news.imageURL}
+
               alt={news.title}
               className="w-32 h-24 object-cover rounded"
             />

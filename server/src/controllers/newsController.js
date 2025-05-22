@@ -1,0 +1,28 @@
+const NewsService = require('../services/usersService');
+
+class NewsController {
+  static getAllNews = async (req, res) => {
+    try {
+      // const { title } = req.query;
+      const news = await NewsService.findAllNews();
+      // console.log(news);
+      res.json(news);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Internal server error');
+    }
+  };
+
+  static getNewsById = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const targetNews = await NewsService.findNewsById(id);
+      res.json(targetNews);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Internal server error');
+    }
+  };
+}
+
+module.exports = NewsController;

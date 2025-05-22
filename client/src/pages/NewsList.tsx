@@ -1,24 +1,37 @@
-
-import { useMemo } from "react";
-import { mockNews, mockUser } from "@/data/mockData";
-import NewsCard from "@/components/news/NewsCard";
-import { News } from "@/types/news";
-import { Separator } from "@/components/ui/separator";
+import { useEffect, useMemo, useState } from 'react';
+import { mockNews, mockUser } from '@/data/mockData';
+import NewsCard from '@/components/news/NewsCard';
+import { News } from '@/types/news';
+import { Separator } from '@/components/ui/separator';
+// import axiosInstance from '../../src/';
+import axios from 'axios';
+import { Key } from 'lucide-react';
 
 const NewsList = () => {
+  const [news, setNews] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`/api/news`)
+      .then((res) => setNews(res.data))
+      .catch(console.log);
+  }, []);
+
+  console.log(news);
+
   const whitelistTags = mockUser.tags.whitelist;
   const blacklistTags = mockUser.tags.blacklist;
 
   const filteredNews = useMemo(() => {
     return mockNews
-      .filter(news => {
+      .filter((news) => {
         // If there are whitelist tags, at least one news tag must be in the whitelist
-        const hasWhitelistMatch = whitelistTags.length === 0 || 
-          news.tags.some(tag => whitelistTags.includes(tag));
-          
+        const hasWhitelistMatch =
+          whitelistTags.length === 0 ||
+          news.tags.some((tag) => whitelistTags.includes(tag));
+
         // News must not have any tags that are in the blacklist
-        const hasBlacklistMatch = news.tags.some(tag => blacklistTags.includes(tag));
-        
+        const hasBlacklistMatch = news.tags.some((tag) => blacklistTags.includes(tag));
+
         return hasWhitelistMatch && !hasBlacklistMatch;
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -29,17 +42,26 @@ const NewsList = () => {
       <h1 className="text-3xl font-bold mb-2">News</h1>
       {whitelistTags.length > 0 && (
         <p className="text-muted-foreground mb-8">
-          Filtered by tags: {whitelistTags.join(", ")}
+          {/* размап title
+          Filtered by tags: {news.map((el) => (
+            <div key={el.id}>{el.title}</div>
+            ))} */}
+          Filtered by tags: {whitelistTags.join(', ')}
         </p>
       )}
 
       <Separator className="my-6" />
-      
+
       {filteredNews.length > 0 ? (
         <div className="space-y-6">
-          {filteredNews.map(news => (
-            <NewsCard key={news.id} news={news} />
+          {news.map((el) => (
+            // размап новостей
+            <NewsCard key={el.id} news={el} />
           ))}
+          {/* {filteredNews.map((news) => (
+            // размап новостей
+            <NewsCard key={news.id} news={news} />
+          ))} */}
         </div>
       ) : (
         <div className="text-center py-12">
