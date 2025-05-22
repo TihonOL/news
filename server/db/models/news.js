@@ -28,12 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  // source
-  // originalURL
-  // title
-  // text
-  // imageURL
-  // original_date
+
   News.init(
     {
       title: DataTypes.STRING,

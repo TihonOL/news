@@ -10,24 +10,24 @@ const Navbar = () => {
     <header className="border-b border-border">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link to="/" className="text-xl font-bold">NewsFilter</Link>
+          <Link to="/" className="text-xl font-bold">Луковые Новости</Link>
           
           <nav className="hidden md:flex items-center gap-6">
             <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
-              Home
+              Домашняя страница
             </Link>
             <Link to="/news" className={`nav-link ${isActive('/news') ? 'active' : ''}`}>
-              News
+              Новости
             </Link>
           </nav>
         </div>
 
         <div className="flex items-center gap-4">
           <Button variant="ghost" asChild>
-            <Link to="/login">Log in</Link>
+            <Link to="/login">войти</Link>
           </Button>
           <Button asChild>
-            <Link to="/signup">Sign up</Link>
+            <Link to="/signup">Регистрация</Link>
           </Button>
         </div>
       </div>
