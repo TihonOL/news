@@ -18,7 +18,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/tokens', tokenRouter);
 // app.use('api/categries', categoriesRouter);
-// app.use('/api/news', newsRouter);
+app.use('/api/news', newsRouter);
 // app.use('/api/profile', profileRouter);
 
 // app.use('/api/news', newsRouter);
