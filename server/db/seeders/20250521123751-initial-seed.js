@@ -11,7 +11,6 @@ module.exports = {
       'Users',
       [
         {
-          id: 1,
           name: 'Иван Иванов',
           email: 'ivan@example.com',
           password: await bcrypt.hash('123', 10),
@@ -20,7 +19,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 2,
           name: 'Мария Петрова',
           email: 'maria@example.com',
           password: await bcrypt.hash('123', 10),
@@ -37,13 +35,11 @@ module.exports = {
       'Categories',
       [
         {
-          id: 1,
           name: 'Технологии',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 2,
           name: 'Политика',
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -57,24 +53,24 @@ module.exports = {
       'News',
       [
         {
-          id: 1,
           title: 'Новость о технологиях',
           source: 'TechNews',
           originalURL: 'https://technews.com/article1',
           original_date: '22.10.2000',
           text: 'Текст новости о технологиях...',
-          imageURL: 'https://example.com/news1.jpg',
+          imageURL:
+            'https://s.rbk.ru/v1_companies_s3/media/trademarks/96888771-9c1a-4d27-b721-50c6d85912d5.jpg',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 2,
           title: 'Политическая новость',
           source: 'PoliticsDaily',
           originalURL: 'https://politicsdaily.com/article2',
           original_date: '20.01.1999',
           text: 'Текст политической новости...',
-          imageURL: 'https://example.com/news2.jpg',
+          imageURL:
+            'https://s.rbk.ru/v1_companies_s3/media/trademarks/96888771-9c1a-4d27-b721-50c6d85912d5.jpg',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -87,14 +83,12 @@ module.exports = {
       'NewsCategories',
       [
         {
-          id: 1,
           newsId: 1,
           categoryId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 2,
           newsId: 2,
           categoryId: 2,
           createdAt: new Date(),
@@ -109,7 +103,6 @@ module.exports = {
       'Favorites',
       [
         {
-          id: 1,
           userId: 1,
           newsId: 1,
           createdAt: new Date(),
@@ -124,7 +117,6 @@ module.exports = {
       'Histories',
       [
         {
-          id: 1,
           userId: 2,
           newsId: 1,
           createdAt: new Date(),
@@ -139,7 +131,6 @@ module.exports = {
       'UserBlackLists',
       [
         {
-          id: 1,
           userId: 1,
           categoryId: 2,
           createdAt: new Date(),
@@ -154,7 +145,6 @@ module.exports = {
       'UserWhiteLists',
       [
         {
-          id: 1,
           userId: 2,
           categoryId: 1,
           createdAt: new Date(),
