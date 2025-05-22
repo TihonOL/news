@@ -6,6 +6,7 @@ const tokenRouter = require('./routes/token.router');
 
 const newsRouter = require('./routes/newsRouter');
 const profileRouter = require('./routes/profileRouter');
+const categoriesRouter = require('./routes/categories.router');
 
 
 const app = express();
