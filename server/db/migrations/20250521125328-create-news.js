@@ -12,6 +12,15 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
+      source: {
+        type: Sequelize.STRING,
+      },
+      originalURL: {
+        type: Sequelize.STRING,
+      },
+      original_date: {
+        type: Sequelize.STRING,
+      },
       text: {
         type: Sequelize.STRING
       },

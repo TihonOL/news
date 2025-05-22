@@ -1,4 +1,5 @@
 'use strict';
+
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -8,33 +9,45 @@ module.exports = (sequelize, DataTypes) => {
       News.belongsToMany(models.Category, {
         through: 'NewsCategories',
         foreignKey: 'newsId',
-        as: 'categories'
+        as: 'categories',
       });
-      
+
       // Favorites
       News.belongsToMany(models.User, {
         through: 'Favorites',
         foreignKey: 'newsId',
-        as: 'favoritedByUsers'
+        as: 'favoritedByUsers',
       });
-      
+
       // History
       News.belongsToMany(models.User, {
         through: 'Histories',
         foreignKey: 'newsId',
-        as: 'viewedByUsers'
+        as: 'viewedByUsers',
       });
     }
   }
-  
-  News.init({
-    title: DataTypes.STRING,
-    text: DataTypes.STRING,
-    imageURL: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'News',
-  });
-  
+
+  // source
+  // originalURL
+  // title
+  // text
+  // imageURL
+  // original_date
+  News.init(
+    {
+      title: DataTypes.STRING,
+      source: DataTypes.STRING,
+      originalURL: DataTypes.STRING,
+      imageURL: DataTypes.STRING,
+      text: DataTypes.STRING,
+      original_date: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'News',
+    },
+  );
+
   return News;
 };
