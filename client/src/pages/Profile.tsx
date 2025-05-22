@@ -10,13 +10,21 @@ const Profile = ({ user }) => {
   const userHistory = mockNews.filter((news) => mockUser.history.includes(news.id));
 
   const [favorites, setFavorites] = useState([]);
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
     axiosInstance.get(`/profile/favorites/${user.data.id}`).then(({ data }) => {
       setFavorites(data.favorites);
-      
+      axiosInstance.get(`/profile/history/${user.data.id}`).then(({ data }) => {
+        setHistory(data);
+      });
     });
   }, []);
+
+
+  
+  
+  
 
   return (
     <div>
@@ -50,10 +58,11 @@ const Profile = ({ user }) => {
 
       <div>
         <h2 className="text-2xl font-bold mb-6">История просмотров</h2>
-        {userHistory.length > 0 ? (
+
+        {history?.length > 0 ? (
           <div className="space-y-6">
-            {userHistory.map((news) => (
-              <NewsCard key={news.id} news={news} />
+            {history?.map((news) => (
+              <NewsCard key={news.id} news={news.news} />
             ))}
           </div>
         ) : (
