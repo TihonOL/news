@@ -13,7 +13,7 @@ class NewsService {
     if (!newsBiId) {
       throw new Error('Student not found');
     }
-    console.log(newsBiId);
+  
     return newsBiId;
   };
 }
