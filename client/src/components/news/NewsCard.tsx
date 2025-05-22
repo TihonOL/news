@@ -7,7 +7,6 @@ type NewsCardProps = {
 };
 
 const NewsCard = ({ news }: NewsCardProps) => {
-   console.log(news);
 
 
   return (
@@ -17,7 +16,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
           <h3 className="text-xl font-medium mb-2">{news.title}</h3>
           <p className="text-muted-foreground text-sm">
 
-            {news.original_date}
+            {/* {news.original_date} */}
             {/* {new Date(news.date).toLocaleDateString('en-US', { 
               month: 'short', 
               day: 'numeric', 

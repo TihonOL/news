@@ -108,6 +108,18 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+                {
+          userId: 2,
+          newsId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+                        {
+          userId: 2,
+          newsId: 2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {},
     );
@@ -119,6 +131,12 @@ module.exports = {
         {
           userId: 2,
           newsId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+                {
+          userId: 2,
+          newsId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

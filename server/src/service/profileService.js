@@ -1,4 +1,4 @@
-const { Favorite, User, News } = require('../../db/models');
+const { Favorite, User, News, History } = require('../../db/models');
 
 class ProfileService {
   static async getFavorites(userId) {
@@ -8,6 +8,17 @@ class ProfileService {
     });
 
     return favorites;
+  }
+
+  static async getHistory(userId) {
+    const history = await History.findAll({
+      where: { userId },
+      include: { model: News, as: 'news' },
+    });
+
+// console.log(history);
+
+    return history;
   }
 }
 
