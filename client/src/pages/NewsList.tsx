@@ -66,7 +66,7 @@ const NewsList = () => {
       ) : (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
-            No news found matching your filter criteria.
+            Нет новостей, подходящих под выбранные фильтры.
           </p>
         </div>
       )}
