@@ -7,7 +7,7 @@ type NewsCardProps = {
 };
 
 const NewsCard = ({ news }: NewsCardProps) => {
-  // console.log(news);
+   console.log(news);
 
 
   return (
@@ -31,7 +31,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
                 {tag}
               </span>
             ))} */}
-            {`${news.text.slice(0, 50)}...`}
+            {`${news.text?.slice(0, 50)}...`}
           </div>
         </div>
 
