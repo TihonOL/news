@@ -1,4 +1,4 @@
-const NewsService = require('../services/usersService');
+const NewsService = require('../service/newsService');
 
 class NewsController {
   static getAllNews = async (req, res) => {
