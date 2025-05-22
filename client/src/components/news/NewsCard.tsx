@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { News } from '@/types/news';
 
 type NewsCardProps = {
@@ -8,12 +9,14 @@ type NewsCardProps = {
 const NewsCard = ({ news }: NewsCardProps) => {
   // console.log(news);
 
+
   return (
     <Link to={`/news/${news.id}`} className="block">
       <article className="news-card mb-4 flex justify-between items-start gap-6">
         <div>
           <h3 className="text-xl font-medium mb-2">{news.title}</h3>
           <p className="text-muted-foreground text-sm">
+
             {news.original_date}
             {/* {new Date(news.date).toLocaleDateString('en-US', { 
               month: 'short', 
@@ -23,6 +26,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {/* {news.tags.map((tag) => (
+
               <span key={tag} className="text-xs bg-secondary px-2 py-1 rounded">
                 {tag}
               </span>
@@ -34,7 +38,9 @@ const NewsCard = ({ news }: NewsCardProps) => {
         {news.imageURL && (
           <div className="flex-shrink-0">
             <img
+
               src={news.imageURL}
+
               alt={news.title}
               className="w-32 h-24 object-cover rounded"
             />

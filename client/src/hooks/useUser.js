@@ -18,11 +18,16 @@ export default function useUser() {
       });
   }, []);
 
-  const logoutHandler = () => {
-    axiosInstance
-      .get("/auth/logout")
-      .then(() => setUser({ status: "guest", data: null }));
+  const logoutHandler = async () => {
+    try {
+      await axiosInstance.get("/auth/logout");
       setAccessToken('');
+      setUser({ status: "guest", data: null }); // Сначала обновляем состояние
+      return true; // Возвращаем успешный статус
+    } catch (error) {
+      console.error('Logout error:', error);
+      return false;
+    }
   };
 
   const signUpHandler = (e) => {
@@ -36,13 +41,13 @@ export default function useUser() {
     });
   };
 
-  const signInHandler = (e) => {
+  const signInHandler = async (e) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
     if (!formData.email || !formData.password) {
       return alert("Missing required fields");
     }
-    axiosInstance.post("/auth/signin", formData).then(({ data }) => {
+    await axiosInstance.post("/auth/signin", formData).then(({ data }) => {
       setUser({ status: "logged", data: data.user });
     });
   };
