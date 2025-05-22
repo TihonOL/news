@@ -19,7 +19,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const { logoutHandler, signInHandler, signUpHandler, user } = useUser();
-  console.log(user);
+  
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,20 +29,20 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-              {/* <Route
+              <Route
                 element={
                   <ProtectedRouter
                     isAllowed={user?.status === 'logged'}
                     redirect="/login"
                   />
                 }
-              > */}
+              >
                 <Route path="/" element={<Home />} />
                 <Route path="/news" element={<NewsList />} />
                 <Route path="/news/:id" element={<NewsDetail />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile user={user} />} />
               </Route>
-            {/* </Route> */}
+            </Route>
             <Route element={<ProtectedRouter isAllowed={user?.status !== 'logged'} />}>
               <Route path="/login" element={<Login signInHandler={signInHandler} />} />
               <Route path="/signup" element={<Signup signUpHandler={signUpHandler} />} />
