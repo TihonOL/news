@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
-const Navbar = () => {
+const Navbar = ({user, logoutHandler}) => {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
+  
 
   return (
     <header className="border-b border-border">
@@ -25,10 +26,10 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <Button variant="ghost" asChild>
-            <Link to="/login">Войти</Link>
+            <Link to="/profile">{user.data ? user.data.name : "Гость"}</Link>
           </Button>
           <Button asChild>
-            <Link to="/signup">Регистрация</Link>
+            <Link onClick={logoutHandler} to="/login">Выйти</Link>
           </Button>
         </div>
       </div>
