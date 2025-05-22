@@ -1,0 +1,81 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 122 54% 34%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 36 57% 53%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 68% 47%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 20%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.news-card {
+  @apply bg-card p-6 rounded-lg hover:ring-1 hover:ring-border transition-all duration-200;
+}
+
+.tag {
+  @apply px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2;
+}
+
+.whitelist-tag {
+  @apply bg-primary/20 text-primary-foreground border border-primary/30;
+}
+
+.blacklist-tag {
+  @apply bg-destructive/20 text-destructive-foreground border border-destructive/30;
+}
+
+.section-heading {
+  @apply text-accent font-medium text-lg mb-3;
+}
+
+.content-container {
+  @apply max-w-5xl mx-auto py-8 px-4;
+}
+
+.nav-link {
+  @apply opacity-70 hover:opacity-100 transition-opacity;
+}
+
+.nav-link.active {
+  @apply opacity-100;
+}
