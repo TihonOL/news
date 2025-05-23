@@ -14,10 +14,12 @@ class NewsController {
   };
 
   static getNewsById = async (req, res) => {
+    console.log(req, '-----');
+    
     try {
       const { id } = req.params;
       const targetNews = await NewsService.findNewsById(id);
-      // console.log(targetNews);
+      console.log(targetNews);
       res.json(targetNews);
     } catch (error) {
       console.log(error);
