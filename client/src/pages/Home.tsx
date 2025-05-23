@@ -55,8 +55,9 @@ const Home = () => {
       .get('/api/categories')
       .then((res) => setCategories(res.data))
       .catch(console.error);
-  }, []);
-
+      
+    }, []);
+    
   return (
     <div>
       <h1 className="text-3xl font-bold mb-2">Фильтрация новостей</h1>

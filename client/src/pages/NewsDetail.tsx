@@ -110,7 +110,7 @@ const NewsDetail = ({ user }) => {
         <img
           src={news.imageURL}
           alt={news.title}
-          className="w-full h-64 object-cover rounded-lg mb-6"
+          className="min-w-[110%] w-[110%] h-auto max-h-64 object-contain mx-auto rounded-md"
         />
       )}
 
