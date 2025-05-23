@@ -8,7 +8,6 @@ profileRouter.route('/history/:userId').get(verifyAccessToken, profileController
 profileRouter.route('/add-history/:newsId').post(verifyAccessToken, profileController.addToHistory)
 profileRouter.route('/add-favorite/:newsId').post(verifyAccessToken, profileController.addFavorite);
 profileRouter.route('/favorite/deleteById/:id').delete(verifyAccessToken, profileController.deleteFavoriteById);
-
 profileRouter.route('/history/deleteById/:id').delete(verifyAccessToken, profileController.deleteHistoryById);
 profileRouter.route('/favorite/clear').delete(verifyAccessToken, profileController.deleteFavorite);
 profileRouter.route('/history/delete').delete(verifyAccessToken, profileController.deleteHistory);

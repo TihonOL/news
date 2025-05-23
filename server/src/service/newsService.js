@@ -1,13 +1,15 @@
 const { News } = require('../../db/models');
 const { Category } = require('../../db/models');
 const { NewsCategory } = require('../../db/models');
+const { UserWhiteList } = require('../../db/models');
 const { History } = require('../../db/models');
 const axios = require('axios');
+const { Op } = require('sequelize');
 
 class NewsService {
   static lastUpdate = 1747927274630;
 
-  static findAllNews = async () => {
+  static findAllNews = async (uId) => {
     const currentTime = Date.now();
     const timeDifference = currentTime - NewsService.lastUpdate;
     const fifteenMinutesInMs = 15 * 60 * 1000;
@@ -52,14 +54,45 @@ class NewsService {
       }
     }
 
+    // const userCategories = await Category.findAll()
+
+    const userCategories = await Category.findAll({
+      where: {
+        id: {
+          [Op.in]: await UserWhiteList.findAll({
+            where: {
+              userId: uId,
+            },
+          }).then((result) => result.map((element) => element.categoryId)),
+        },
+      },
+    }).then((result) => result.map((element) => element.name));
+
+    if (userCategories.length === 0) {
+      return { allNews: [], userCategories: [] };
+    }
+
     const allNews = await News.findAll({
       order: [['original_date', 'DESC']],
       include: {
         model: Category,
         as: 'categories',
+        where: {
+          id: {
+            [Op.in]: await UserWhiteList.findAll({
+              where: {
+                userId: uId,
+              },
+            }).then((result) => result.map((element) => element.categoryId)),
+          },
+        },
       },
     });
-    return allNews;
+
+    console.log(userCategories);
+    // const allNews = allNewsData.map((element) => element.get());
+    // allNews.userCategories = userCategories;
+    return { allNews, userCategories };
   };
 
   static findNewsById = async (nId, uId) => {

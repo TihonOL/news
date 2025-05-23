@@ -6,8 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // WhiteLists
       User.belongsToMany(models.Category, {
-        through: 'UserWhiteLists',
+        through: models.UserWhiteList,
         foreignKey: 'userId',
+        otherKey: 'categoryId',
         as: 'whiteListedCategories'
       });
       

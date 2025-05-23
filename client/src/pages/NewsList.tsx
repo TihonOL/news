@@ -11,11 +11,15 @@ import axiosInstance from '@/axiosInstance';
 
 const NewsList = () => {
   const [news, setNews] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios
       .get('/api/news')
-      .then((res) => setNews(res.data))
+      .then((res) => {
+        setCategories(res.data.userCategories);
+        setNews(res.data.allNews);
+      })
       .catch(console.log);
   }, []);
 
@@ -49,6 +53,16 @@ const NewsList = () => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [whitelistTags, blacklistTags]);
 
+  if (categories.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-muted-foreground">
+          Нет новостей, подходящих под выбранные фильтры.
+        </p>
+      </div>
+    );
+  }
+
   if (news.length === 0) {
     return (
       <div>
@@ -64,19 +78,19 @@ const NewsList = () => {
   //     </div>
   //   );
   // }
-
+  // console.log(news);
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-2">News</h1>
+      <h1 className="text-3xl font-bold mb-2">Новости</h1>
       {whitelistTags.length > 0 && (
         <p className="text-muted-foreground mb-8">
-          Filtered by tags: {whitelistTags.join(', ')}
+          Отсортировано по категориям: {categories.join(', ')}
         </p>
       )}
 
       <Separator className="my-6" />
 
-      {filteredNews.length > 0 ? (
+      {categories.length > 0 ? (
         <div className="space-y-6">
           {news.map((el) => (
             // размап новостей
