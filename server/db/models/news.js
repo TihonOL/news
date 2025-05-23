@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'newsId',
         as: 'viewedByUsers',
       });
+      
     }
   }
 

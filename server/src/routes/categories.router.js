@@ -1,13 +1,16 @@
-const categoriesRouter = require('express').Router();
-
-const bcrypt = require('bcrypt');
-const { News } = require('../../db/models');
+const express = require('express');
 const { Category } = require('../../db/models');
-const generateTokens = require('../utils/generateTokens');
-const cookieConfig = require('../configs/cookie.config');
 
-categoriesRouter.get(async (req, res) => {
-    const news = News.findAll()
-})
+const categoriesRouter = express.Router();
+
+categoriesRouter.route('/').get(async (req, res) => {
+  try {
+    const allCategories = await Category.findAll();    
+    res.json(allCategories);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = categoriesRouter;
