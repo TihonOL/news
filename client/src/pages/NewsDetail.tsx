@@ -42,6 +42,11 @@ const NewsDetail = () => {
         setError('Failed to load news article');
         setLoading(false);
       });
+
+    // axiosInstance
+    //   .post(`/profile/add-history/${id}`, { userId: user.id })
+    //   .then((res) => console.log(res))
+    //   .catch(console.log);
   }, [id]);
 
   if (loading) {
@@ -91,10 +96,11 @@ const NewsDetail = () => {
 
       <h1 className="text-3xl font-bold mb-4">{news.title}</h1>
       <h2 className="text-1xl font-bold mb-4">Источник: {news.source}</h2>
-      <h2 className="text-1xl font-bold mb-4">{news.author ? `Автор: ${news.author}`: ''}</h2>
+      <h2 className="text-1xl font-bold mb-4">
+        {news.author ? `Автор: ${news.author}` : ''}
+      </h2>
 
       <p className="text-muted-foreground mb-6">{formattedDate}</p>
-
 
       {news.imageURL && (
         <img
