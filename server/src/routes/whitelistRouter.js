@@ -31,4 +31,26 @@ whitelistRouter
     }
   });
 
+whitelistRouter.route('/:name').delete(verifyAccessToken, async (req, res) => {
+  console.log(req.params);
+  const { name } = req.params;
+  const uId = res.locals.user.id;
+  const categoryToDelete = await Category.findOne({
+    where: {
+      name,
+    },
+  });
+  try {
+    await UserWhiteList.destroy({
+      where: {
+        categoryId: categoryToDelete.id,
+        userId: uId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = whitelistRouter;

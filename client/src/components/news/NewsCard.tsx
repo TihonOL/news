@@ -19,6 +19,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
         })
         .replace(/\//g, '.')
     : '';
+  // console.log(news);
 
   return (
     <Link to={`/news/${news.id}`} className="block">
@@ -27,11 +28,6 @@ const NewsCard = ({ news }: NewsCardProps) => {
           <h3 className="text-xl font-medium mb-2">{news.title}</h3>
           <p className="text-muted-foreground text-sm">{formattedDate}</p>
           <p className="text-muted-foreground text-sm">
-
-            {formattedDate}
-          </p>
-          <p className="text-muted-foreground text-sm">
-
             Категория: {news.categories.map((el) => el.name).join(' ')}
           </p>
           <div className="mt-2 flex flex-wrap gap-2">

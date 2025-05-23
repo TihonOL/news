@@ -4,7 +4,9 @@ class NewsController {
   static getAllNews = async (req, res) => {
     try {
       // const { title } = req.query;
-      const news = await NewsService.findAllNews();
+      const userId = res.locals.user.id;
+      console.log(userId);
+      const news = await NewsService.findAllNews(userId);
       // console.log(news);
       res.json(news);
     } catch (error) {
@@ -14,7 +16,6 @@ class NewsController {
   };
 
   static getNewsById = async (req, res) => {
-    
     try {
       const userId = res.locals.user.id;
       const newsId = req.params.id;
