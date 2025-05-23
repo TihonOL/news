@@ -21,12 +21,12 @@ const NewsList = () => {
 
   const [whiteNews, setWhiteNews] = useState([]);
 
-  useEffect(() => {
-    axiosInstance
-      .get('/whitelist')
-      .then((res) => setWhiteNews(res.data))
-      .catch(console.error);
-  }, []);
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get('/whitelist')
+  //     .then((res) => setWhiteNews(res.data))
+  //     .catch(console.error);
+  // }, []);
 
   // console.log(news);
 
@@ -78,9 +78,9 @@ const NewsList = () => {
 
       {filteredNews.length > 0 ? (
         <div className="space-y-6">
-          {whiteNews.map((el) => (
+          {news.map((el) => (
             // размап новостей
-            <NewsCard key={el.id} whiteNews={el} />
+            <NewsCard key={el.id} news={el} />
           ))}
           {/* { whiteNews.map((el) => (
             </>
