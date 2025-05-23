@@ -1,6 +1,7 @@
 const { News } = require('../../db/models');
 const { Category } = require('../../db/models');
 const { NewsCategory } = require('../../db/models');
+const { History } = require('../../db/models');
 const axios = require('axios');
 
 class NewsService {
@@ -52,17 +53,28 @@ class NewsService {
       }
     }
 
-    const allNews = await News.findAll();
-    // console.log(allNews);
-
+    const allNews = await News.findAll({
+      order: [['original_date', 'DESC']],
+      include: {
+        model: Category,
+        as: 'categories',
+      },
+    });
+    console.log(allNews);
     return allNews;
   };
 
-  static findNewsById = async (id) => {
-    const newsBiId = await News.findByPk(id);
+  static findNewsById = async (nId, uId) => {
+    const newsBiId = await News.findByPk(nId);
+    await History.findOrCreate({
+      where: {
+        userId: uId,
+        newsId: nId,
+      },
+    });
     // console.log(newsBiId);
     if (!newsBiId) {
-      throw new Error('Student not found');
+      throw new Error('News not found');
     }
     return newsBiId;
   };
