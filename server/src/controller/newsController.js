@@ -1,4 +1,4 @@
-const NewsService = require('../services/usersService');
+const NewsService = require('../service/newsService');
 
 class NewsController {
   static getAllNews = async (req, res) => {
@@ -14,9 +14,12 @@ class NewsController {
   };
 
   static getNewsById = async (req, res) => {
+    console.log(req, '-----');
+    
     try {
       const { id } = req.params;
       const targetNews = await NewsService.findNewsById(id);
+      console.log(targetNews);
       res.json(targetNews);
     } catch (error) {
       console.log(error);

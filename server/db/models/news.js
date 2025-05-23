@@ -25,17 +25,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'newsId',
         as: 'viewedByUsers',
       });
+      
     }
   }
 
 
   News.init(
     {
+      author: DataTypes.STRING,
       title: DataTypes.STRING,
       source: DataTypes.STRING,
       originalURL: DataTypes.STRING,
       imageURL: DataTypes.STRING,
-      text: DataTypes.STRING,
+      text: DataTypes.TEXT,
       original_date: DataTypes.STRING,
     },
     {
