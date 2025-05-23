@@ -8,7 +8,7 @@ type TagListProps = {
   title: string;
   type: 'whitelist' | 'blacklist';
   tags: string[];
-  onTagAdd: (tag: string) => void;
+  onTagAdd: (tag: string, tagId: number) => void;
   onTagRemove: (tag: string) => void;
 };
 
@@ -32,9 +32,9 @@ const TagList = ({ title, type, tags, onTagAdd, onTagRemove }: TagListProps) => 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleAdd = (tag: string) => {
+  const handleAdd = (tag: string, tagId: number) => {
     if (!tags.includes(tag)) {
-      onTagAdd(tag);
+      onTagAdd(tag, tagId);
     }
     setShowDropdown(false);
   };
@@ -95,7 +95,7 @@ const TagList = ({ title, type, tags, onTagAdd, onTagRemove }: TagListProps) => 
             {categories.map((tag) => (
               <button
                 key={tag.name}
-                onClick={() => handleAdd(tag.name)}
+                onClick={() => handleAdd(tag.name, tag.id)}
                 className="px-3 py-1 text-sm rounded-full border border-neutral-600 hover:bg-yellow-600 hover:text-black transition-colors duration-150"
               >
                 {tag.name}

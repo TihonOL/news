@@ -7,17 +7,28 @@ import { Separator } from '@/components/ui/separator';
 import axios from 'axios';
 import { Key } from 'lucide-react';
 import SpinnerUi from '@/components/ui/spinnerUi';
+import axiosInstance from '@/axiosInstance';
 
 const NewsList = () => {
   const [news, setNews] = useState([]);
+
   useEffect(() => {
     axios
-      .get(`/api/news`)
+      .get('/api/news')
       .then((res) => setNews(res.data))
       .catch(console.log);
   }, []);
 
-  console.log(news);
+  const [whiteNews, setWhiteNews] = useState([]);
+
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get('/whitelist')
+  //     .then((res) => setWhiteNews(res.data))
+  //     .catch(console.error);
+  // }, []);
+
+  // console.log(news);
 
   const whitelistTags = mockUser.tags.whitelist;
   const blacklistTags = mockUser.tags.blacklist;
@@ -39,8 +50,20 @@ const NewsList = () => {
   }, [whitelistTags, blacklistTags]);
 
   if (news.length === 0) {
-    return <div><SpinnerUi/></div>;
+    return (
+      <div>
+        <SpinnerUi />
+      </div>
+    );
   }
+
+  // if (whiteNews.length === 0) {
+  //   return (
+  //     <div>
+  //       <SpinnerUi />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
@@ -59,6 +82,9 @@ const NewsList = () => {
             // размап новостей
             <NewsCard key={el.id} news={el} />
           ))}
+          {/* { whiteNews.map((el) => (
+            </>
+          )) } */}
           {/* {filteredNews.map((news) => (
             // размап новостей
             <NewsCard key={news.id} news={news} />

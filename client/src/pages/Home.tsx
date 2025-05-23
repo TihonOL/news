@@ -5,6 +5,7 @@ import TagList from '@/components/tags/TagList';
 import { popularCategories } from '@/data/mockData';
 import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
+import axiosInstance from '@/axiosInstance';
 
 const Home = () => {
   const { toast } = useToast();
@@ -14,8 +15,10 @@ const Home = () => {
   ]);
   const [blacklistTags, setBlacklistTags] = useState<string[]>(['Сплетни']);
 
-  const handleAddWhitelistTag = (tag: string) => {
+  const handleAddWhitelistTag = (tag: string, tagId: number) => {
     if (!whitelistTags.includes(tag)) {
+      console.log({ tagId });
+      axiosInstance.post('/whitelist', { categoryId: tagId });
       setWhitelistTags([...whitelistTags, tag]);
       toast({
         title: 'Тег добавлен',
@@ -42,9 +45,9 @@ const Home = () => {
     setBlacklistTags(blacklistTags.filter((t) => t !== tag));
   };
 
-  const handleCategoryClick = (category: string) => {
+  const handleCategoryClick = (category: string, categoryId: number) => {
     if (!whitelistTags.includes(category)) {
-      handleAddWhitelistTag(category);
+      handleAddWhitelistTag(category, categoryId);
     }
   };
 
@@ -55,9 +58,15 @@ const Home = () => {
       .get('/api/categories')
       .then((res) => setCategories(res.data))
       .catch(console.error);
-      
-    }, []);
-    
+  }, []);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/whitelist')
+      .then((res) => setWhitelistTags(res.data.whiteListedCategories.map((el) => el.name)))
+      .catch(console.error);
+  }, []);
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-2">Фильтрация новостей</h1>
@@ -92,7 +101,7 @@ const Home = () => {
               variant="outline"
               size="sm"
               className="tag"
-              onClick={() => handleCategoryClick(category.name)}
+              onClick={() => handleCategoryClick(category.name, category.id)}
             >
               {category.name}
             </Button>
