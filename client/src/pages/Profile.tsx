@@ -21,11 +21,6 @@ const Profile = ({ user }) => {
     });
   }, []);
 
-
-  
-  
-  
-
   return (
     <div>
       <div className="flex items-center gap-4 mb-6">
