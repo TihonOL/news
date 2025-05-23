@@ -30,6 +30,11 @@ const Profile = ({ user }) => {
     setHistory([]);
   };
 
+  const handleDeleteOneHistory = async () => {
+    await axiosInstance.delete('/profile/history/delete/');
+    setHistory([]);
+  };
+
   return (
     <div>
       <div className="flex items-center gap-4 mb-6">
@@ -91,7 +96,8 @@ const Profile = ({ user }) => {
               variant="ghost"
               size="sm"
               className="text-destructive hover:text-destructive/80"
-              // onClick={() => /* Логика очистки всей истории */}
+              type="button"
+              onClick={() => handleDeleteHistory()}
             >
               <Trash2 className="h-4 w-4 mr-2" />
               Очистить все
@@ -107,7 +113,7 @@ const Profile = ({ user }) => {
                   variant="ghost"
                   size="icon"
                   className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 hover:bg-destructive/10 text-destructive"
-                  onClick={() => handleDeleteHistory(item.news.id)}
+                  // onClick={() => handleDeleteHistory(item.news.id)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

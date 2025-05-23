@@ -43,11 +43,6 @@ const NewsDetail = ({ user }) => {
         setError('Failed to load news article');
         setLoading(false);
       });
-
-    // axiosInstance
-    //   .post(`/profile/add-history/${id}`, { userId: user.id })
-    //   .then((res) => console.log(res))
-    //   .catch(console.log);
   }, [id]);
 
   const handleAddToFavorites = async () => {
