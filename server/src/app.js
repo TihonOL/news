@@ -23,6 +23,7 @@ app.use('/api/categories', categoriesRouter)
 app.use('/api/news', newsRouter);
 app.use('/api/profile', profileRouter);
 
+
 // app.use('/api/news', newsRouter);
 // app.use('/api/profile', profileRouter);
 

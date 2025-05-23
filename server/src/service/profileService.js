@@ -79,6 +79,26 @@ class ProfileService {
 
     return history;
   }
+
+  static async deleteFavoriteById(id) {
+    const favorite = await Favorite.destroy({
+      where: { id },
+    });
+    if (!favorite) {
+      throw new Error('This news is not in history');
+    }
+    return favorite;
+  }
+
+    static async deleteHistoryById(id) {
+    const favorite = await History.destroy({
+      where: { id },
+    });
+    if (!favorite) {
+      throw new Error('This news is not in history');
+    }
+    return favorite;
+  }
 }
 
 module.exports = ProfileService;
