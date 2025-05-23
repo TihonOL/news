@@ -30,10 +30,18 @@ const Profile = ({ user }) => {
     setHistory([]);
   };
 
-  const handleDeleteOneHistory = async () => {
-    await axiosInstance.delete('/profile/history/delete/');
-    setHistory([]);
+
+  const handleDeleteFavoriteId = async (id) => {
+    await axiosInstance.delete(`/profile/favorite/deleteById/${id}`);
+    setFavorites((prev) => prev.filter((el) => el.id !== id));
   };
+
+  const handleDeleteHistoryId = async (id) => {
+    await axiosInstance.delete(`/profile/history/deleteById/${id}`);
+    setHistory((prev) => prev.filter((el) => el.id !== id));
+  };
+
+  console.log(favorites);
 
   return (
     <div>
@@ -74,7 +82,7 @@ const Profile = ({ user }) => {
                   variant="ghost"
                   size="icon"
                   className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 hover:bg-destructive/10 text-destructive"
-                  // onClick={() => handleDeleteFavorite(favorite.news.id)}
+                  onClick={() => handleDeleteFavoriteId(favorite.id)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -113,7 +121,7 @@ const Profile = ({ user }) => {
                   variant="ghost"
                   size="icon"
                   className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 hover:bg-destructive/10 text-destructive"
-                  // onClick={() => handleDeleteHistory(item.news.id)}
+                  onClick={() => handleDeleteHistoryId(item.id)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
