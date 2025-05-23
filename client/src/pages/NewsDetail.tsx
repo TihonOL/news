@@ -90,6 +90,8 @@ const NewsDetail = ({ user }) => {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
         })
         .replace(/\//g, '.')
     : '';
@@ -120,6 +122,10 @@ const NewsDetail = ({ user }) => {
       )}
 
       <p className="text-lg mb-8">{news.text}</p>
+
+      <a href={news.originalURL} className="text-1xl font-bold mb-4">
+        Ссылка на первоисточник
+      </a>
 
       <Separator className="my-8" />
 

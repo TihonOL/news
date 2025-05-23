@@ -53,8 +53,14 @@ class NewsService {
       }
     }
 
-    const allNews = await News.findAll();
-
+    const allNews = await News.findAll({
+      order: [['original_date', 'DESC']],
+      include: {
+        model: Category,
+        as: 'categories',
+      },
+    });
+    console.log(allNews);
     return allNews;
   };
 
