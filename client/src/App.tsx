@@ -19,7 +19,6 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const { logoutHandler, signInHandler, signUpHandler, user } = useUser();
-  
 
   return (
     <QueryClientProvider client={queryClient}>
