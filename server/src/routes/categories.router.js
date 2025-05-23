@@ -5,7 +5,7 @@ const categoriesRouter = express.Router();
 
 categoriesRouter.route('/').get(async (req, res) => {
   try {
-    const allCategories = await Category.findAll();    
+    const allCategories = await Category.findAll();
     res.json(allCategories);
   } catch (error) {
     console.error(error);

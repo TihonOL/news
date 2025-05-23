@@ -7,8 +7,7 @@ const tokenRouter = require('./routes/token.router');
 const newsRouter = require('./routes/newsRouter');
 const profileRouter = require('./routes/profileRouter');
 const categoriesRouter = require('./routes/categories.router');
-
-
+const whitelistRouter = require('./routes/whitelistRouter');
 
 const app = express();
 
@@ -22,6 +21,7 @@ app.use('/api/tokens', tokenRouter);
 app.use('/api/categories', categoriesRouter)
 app.use('/api/news', newsRouter);
 app.use('/api/profile', profileRouter);
+app.use('/api/whitelist', whitelistRouter);
 
 // app.use('/api/news', newsRouter);
 // app.use('/api/profile', profileRouter);
