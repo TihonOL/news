@@ -9,16 +9,13 @@ import axiosInstance from '@/axiosInstance';
 
 const Home = () => {
   const { toast } = useToast();
-  const [whitelistTags, setWhitelistTags] = useState<string[]>([
-    'Экология',
-    'Технологии',
-  ]);
-  const [blacklistTags, setBlacklistTags] = useState<string[]>(['Сплетни']);
+  const [whitelistTags, setWhitelistTags] = useState<string[]>([]);
+  const [blacklistTags, setBlacklistTags] = useState<string[]>([]);
 
-  const handleAddWhitelistTag = (tag: string, tagId: number) => {
+  const handleAddWhitelistTag = async (tag: string, tagId: number) => {
     if (!whitelistTags.includes(tag)) {
       console.log({ tagId });
-      axiosInstance.post('/whitelist', { categoryId: tagId });
+      await axiosInstance.post('/whitelist', { categoryId: tagId });
       setWhitelistTags([...whitelistTags, tag]);
       toast({
         title: 'Тег добавлен',
@@ -28,6 +25,7 @@ const Home = () => {
   };
 
   const handleRemoveWhitelistTag = (tag: string) => {
+    axiosInstance.delete(`/whitelist/${tag}`);
     setWhitelistTags(whitelistTags.filter((t) => t !== tag));
   };
 
@@ -63,7 +61,9 @@ const Home = () => {
   useEffect(() => {
     axiosInstance
       .get('/whitelist')
-      .then((res) => setWhitelistTags(res.data.whiteListedCategories.map((el) => el.name)))
+      .then((res) =>
+        setWhitelistTags(res.data.whiteListedCategories.map((el) => el.name)),
+      )
       .catch(console.error);
   }, []);
 
