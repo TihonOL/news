@@ -42,31 +42,28 @@ class ProfileService {
   }
 
   static async deleteFavorite(userId) {
-    const favorite = await History.findAll({
+    const favorite = await Favorite.destroy({
       where: {
         userId,
       },
     });
 
-
     if (!favorite) {
       throw new Error('This news is not in favorites');
     }
-
-    await favorite.destroy();
-    return favorite;
+    return { favorite };
   }
 
-  static async deleteHistory(userId, newsId) {
-    const history = await History.findOne({
-      where: { userId, newsId },
+  static async deleteHistory(userId) {
+    const history = await History.destroy({
+      where: { userId },
     });
 
     if (!history) {
       throw new Error('This news is not in history');
     }
 
-    await history.destroy();
+    
     return history;
   }
 }

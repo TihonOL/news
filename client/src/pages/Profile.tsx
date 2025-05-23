@@ -4,13 +4,10 @@ import { mockUser, mockNews } from '@/data/mockData';
 import NewsCard from '@/components/news/NewsCard';
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/axiosInstance';
-import { Trash2 } from 'lucide-react'; // Импортируем иконку корзины
-import { Button } from '@/components/ui/button'; // Импортируем компонент кнопки
+import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Profile = ({ user }) => {
-  // const userFavorites = mockNews.filter((news) => mockUser.favorites.includes(news.id));
-  // const userHistory = mockNews.filter((news) => mockUser.history.includes(news.id));
-
   const [favorites, setFavorites] = useState([]);
   const [history, setHistory] = useState([]);
 
@@ -24,18 +21,13 @@ const Profile = ({ user }) => {
   }, []);
 
   const handleDeleteFavorite = async () => {
-    await axiosInstance.delete('/profile/history/clear');
-    setHistory([])
-
+    await axiosInstance.delete('/profile/favorite/clear');
+    setFavorites([]);
   };
 
-  const handleDeleteHistory = (newsId) => {
-   axiosInstance.delete(`/profile/delete-history/${newsId}`)
-      .then(() => {
-        setHistory(history.filter(item => item.news.id !== newsId));
-      })
-      .catch(console.error);
-  
+  const handleDeleteHistory = async () => {
+    await axiosInstance.delete('/profile/history/delete');
+    setHistory([]);
   };
 
   return (
@@ -57,9 +49,9 @@ const Profile = ({ user }) => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Избранное</h2>
           {favorites.length > 0 && (
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="text-destructive hover:text-destructive/80"
               onClick={() => handleDeleteFavorite()}
             >
@@ -95,9 +87,9 @@ const Profile = ({ user }) => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">История просмотров</h2>
           {history.length > 0 && (
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="text-destructive hover:text-destructive/80"
               // onClick={() => /* Логика очистки всей истории */}
             >

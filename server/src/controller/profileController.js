@@ -53,11 +53,9 @@ class ProfileController {
     }
   }
 
-
   static async deleteFavorite(req, res) {
     try {
       const userId = res.locals.user.id;
-      // const { newsId } = req.params;
       const favorite = await ProfileService.deleteFavorite(userId);
       return res.status(200).json(favorite);
     } catch (error) {
@@ -69,8 +67,7 @@ class ProfileController {
   static async deleteHistory(req, res) {
     try {
       const userId = res.locals.user.id;
-      const { newsId } = req.params;
-      const history = await ProfileService.deleteHistory(userId, newsId);
+      const history = await ProfileService.deleteHistory(userId);
       return res.status(200).json(history);
     } catch (error) {
       console.error(error);
