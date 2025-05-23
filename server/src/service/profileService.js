@@ -40,6 +40,35 @@ class ProfileService {
     }
     return history;
   }
+
+  static async deleteFavorite(userId) {
+    const favorite = await History.findAll({
+      where: {
+        userId,
+      },
+    });
+
+
+    if (!favorite) {
+      throw new Error('This news is not in favorites');
+    }
+
+    await favorite.destroy();
+    return favorite;
+  }
+
+  static async deleteHistory(userId, newsId) {
+    const history = await History.findOne({
+      where: { userId, newsId },
+    });
+
+    if (!history) {
+      throw new Error('This news is not in history');
+    }
+
+    await history.destroy();
+    return history;
+  }
 }
 
 module.exports = ProfileService;
