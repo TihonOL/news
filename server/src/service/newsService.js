@@ -25,7 +25,6 @@ class NewsService {
         .finally(() => {
           // always executed
         });
-      // console.log(actualNews);
       for (const element of actualNews) {
         // eslint-disable-next-line no-await-in-loop
         const [newNews, isCreatedNews] = await News.findOrCreate({
@@ -104,7 +103,6 @@ class NewsService {
         newsId: nId,
       },
     });
-    // console.log(newsBiId);
     if (!newsBiId) {
       throw new Error('News not found');
     }

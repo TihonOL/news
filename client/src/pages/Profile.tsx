@@ -41,7 +41,6 @@ const Profile = ({ user }) => {
     setHistory((prev) => prev.filter((el) => el.id !== id));
   };
 
-  console.log(favorites);
 
   return (
     <div>

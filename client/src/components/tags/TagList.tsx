@@ -65,7 +65,6 @@ const TagList = ({ title, type, tags, onTagAdd, onTagRemove }: TagListProps) => 
       .catch(console.error); // catch((error) => console.error(error))
   }, []); // <--- массив зависимостей
 
-  console.log(categories);
 
   return (
     <div className="mb-8">

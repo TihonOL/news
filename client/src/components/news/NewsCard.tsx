@@ -7,7 +7,6 @@ type NewsCardProps = {
 };
 
 const NewsCard = ({ news }: NewsCardProps) => {
-  // console.log(news);
   const formattedDate = news.original_date
     ? new Date(news.original_date)
         .toLocaleDateString('ru-RU', {
