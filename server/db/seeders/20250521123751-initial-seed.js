@@ -1,4 +1,5 @@
-'use strict';
+// 'use strict';
+
 
 /** @type {import('sequelize-cli').Migration} */
 const bcrypt = require('bcrypt');
@@ -171,15 +172,3 @@ module.exports = {
     //     {},
     //   );
   },
-
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('UserWhiteLists', null, {});
-    await queryInterface.bulkDelete('UserBlackLists', null, {});
-    await queryInterface.bulkDelete('Histories', null, {});
-    await queryInterface.bulkDelete('Favorites', null, {});
-    await queryInterface.bulkDelete('NewsCategories', null, {});
-    await queryInterface.bulkDelete('News', null, {});
-    await queryInterface.bulkDelete('Categories', null, {});
-    await queryInterface.bulkDelete('Users', null, {});
-  },
-};

@@ -5,7 +5,10 @@ import { News } from '@/types/news';
 import { Separator } from '@/components/ui/separator';
 // import axiosInstance from '../../src/';
 import axios from 'axios';
-import { Key } from 'lucide-react';
+import SpinnerUi from '@/components/ui/spinnerUi';
+import axiosInstance from '@/axiosInstance';
+
+
 
 const NewsList = () => {
   const [news, setNews] = useState([]);
@@ -14,9 +17,11 @@ const NewsList = () => {
       .get(`/api/news`)
       .then((res) => setNews(res.data))
       .catch(console.log);
+
+      
   }, []);
 
-  // console.log(news);
+
 
   const whitelistTags = mockUser.tags.whitelist;
   const blacklistTags = mockUser.tags.blacklist;
@@ -37,9 +42,19 @@ const NewsList = () => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [whitelistTags, blacklistTags]);
 
+
+if (news.length === 0) {
+  return (
+    <div className="text-center py-12">
+<SpinnerUi/>
+    </div>
+  );
+}
+
+
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-2">News</h1>
+      <h1 className="text-3xl font-bold mb-2">Новости</h1>
       {whitelistTags.length > 0 && (
         <p className="text-muted-foreground mb-8">
           {/* размап title
