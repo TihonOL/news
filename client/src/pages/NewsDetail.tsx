@@ -4,7 +4,6 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
 import axiosInstance from '@/axiosInstance';
 
 interface NewsItem {
@@ -25,11 +24,12 @@ interface NewsItem {
   }>;
 }
 
-const NewsDetail = () => {
+const NewsDetail = ({ user }) => {
   const { id } = useParams();
   const [news, setNews] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState(false);
 
   useEffect(() => {
     axiosInstance
@@ -43,12 +43,20 @@ const NewsDetail = () => {
         setError('Failed to load news article');
         setLoading(false);
       });
-    
-        axiosInstance
-      .post(`/profile/add-history/${id}`, { userId: user.id })
-      .then((res) => console.log(res))
-      .catch(console.log);
+
+    // axiosInstance
+    //   .post(`/profile/add-history/${id}`, { userId: user.id })
+    //   .then((res) => console.log(res))
+    //   .catch(console.log);
   }, [id]);
+
+  const handleAddToFavorites = async () => {
+    const response = await axiosInstance.post(`/profile/add-favorite/${id}`, {
+      userId: user.id,
+    });
+
+    setFavorites(true);
+  };
 
   if (loading) {
     return <div className="text-center py-12">Loading...</div>;
@@ -95,14 +103,13 @@ const NewsDetail = () => {
         </Link>
       </Button>
 
-
       <h1 className="text-3xl font-bold mb-4">{news.title}</h1>
       <h2 className="text-1xl font-bold mb-4">Источник: {news.source}</h2>
-      <h2 className="text-1xl font-bold mb-4">{news.author ? `Автор: ${news.author}`: ''}</h2>
+      <h2 className="text-1xl font-bold mb-4">
+        {news.author ? `Автор: ${news.author}` : ''}
+      </h2>
 
       <p className="text-muted-foreground mb-6">{formattedDate}</p>
-
-
 
       {news.imageURL && (
         <img
@@ -120,10 +127,9 @@ const NewsDetail = () => {
         <Button
           variant="default"
           className="bg-yellow-500 hover:bg-yellow-600 text-white"
+          onClick={handleAddToFavorites}
         >
-          <Link onClick={handleAddToFavorites} to="#">
-            Добавить в избранное
-          </Link>
+          <Link to="#">Добавить в избранное</Link>
         </Button>
 
         <Button variant="default" className="bg-red-500 hover:bg-red-600 text-white">
