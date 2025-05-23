@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/axiosInstance';
+import { mockNews } from '@/data/mockData';
 
 interface NewsItem {
   id: string;
@@ -22,16 +23,35 @@ interface NewsItem {
     bias: string;
     url?: string;
   }>;
+  source?: string; // добавил, т.к. используете news.source
+  author?: string; // добавил, т.к. используете news.author
 }
 
-const NewsDetail = ({ user }) => {
-  const { id } = useParams();
+interface NewsDetailProps {
+  user: { id: string };
+}
+
+const NewsDetail = ({ user }: NewsDetailProps) => {
+  const { id } = useParams<{ id: string }>();
   const [news, setNews] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [favorites, setFavorites] = useState(false);
 
+  const olol = { ...news, bias : {
+    left: 0,
+    center: 0,
+    right: 0  
+  } }; 
+  console.log({ olol, news, mockNews, id });
+
   useEffect(() => {
+    if (!id) {
+      setError('Invalid news ID');
+      setLoading(false);
+      return;
+    }
+
     axiosInstance
       .get(`/news/${id}`)
       .then((res) => {
@@ -44,18 +64,30 @@ const NewsDetail = ({ user }) => {
         setLoading(false);
       });
 
-    // axiosInstance
-    //   .post(`/profile/add-history/${id}`, { userId: user.id })
-    //   .then((res) => console.log(res))
-    //   .catch(console.log);
+
   }, [id]);
+  console.log(news?.source);
+  if (news?.source === 'RBC.ru') {
+    olol.bias.center = 10;
+    olol.bias.left = 20;
+    olol.bias.right = 70;
+  }
+
+  if (news?.source === 'Lenta.ru') {
+    olol.bias.center = 3;
+    olol.bias.left = 80;
+    olol.bias.right = 17;
+  }
 
   const handleAddToFavorites = async () => {
-    const response = await axiosInstance.post(`/profile/add-favorite/${id}`, {
-      userId: user.id,
-    });
-
-    setFavorites(true);
+    try {
+      await axiosInstance.post(`/profile/add-favorite/${id}`, {
+        userId: user.id,
+      });
+      setFavorites(true);
+    } catch (error) {
+      console.error('Failed to add to favorites', error);
+    }
   };
 
   if (loading) {
@@ -128,63 +160,21 @@ const NewsDetail = ({ user }) => {
           variant="default"
           className="bg-yellow-500 hover:bg-yellow-600 text-white"
           onClick={handleAddToFavorites}
+          disabled={favorites}
         >
-          <Link to="#">Добавить в избранное</Link>
-        </Button>
-
-        <Button variant="default" className="bg-red-500 hover:bg-red-600 text-white">
-          <Link to="#">Внести в черный список</Link>
+          Добавить в избранное
         </Button>
       </div>
 
-      {news.bias && (
-        <div className="mb-8">
-          <h3 className="section-heading">Political Bias</h3>
-          <BiasBar
-            left={news.bias.left || 0}
-            center={news.bias.center || 0}
-            right={news.bias.right || 0}
-          />
-        </div>
-      )}
+      <div className="mb-8 mt-6">
+        <h3 className="section-heading">Политический уклон</h3>
 
-      {news.sources && (
-        <div>
-          <h3 className="section-heading">Media Bias</h3>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <h4 className="text-sm font-medium mb-2">Left</h4>
-              <ul className="text-sm">
-                {news.sources
-                  .filter((s) => s.bias === 'left')
-                  .map((s, i) => (
-                    <li key={i}>{s.name}</li>
-                  ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-medium mb-2">Center</h4>
-              <ul className="text-sm">
-                {news.sources
-                  .filter((s) => s.bias === 'center')
-                  .map((s, i) => (
-                    <li key={i}>{s.name}</li>
-                  ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-medium mb-2">Right</h4>
-              <ul className="text-sm">
-                {news.sources
-                  .filter((s) => s.bias === 'right')
-                  .map((s, i) => (
-                    <li key={i}>{s.name}</li>
-                  ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
+        <BiasBar
+          left={olol.bias.left || 0}
+          center={olol.bias.center || 0}
+          right={olol.bias.right || 0}
+        />
+      </div>
     </div>
   );
 };

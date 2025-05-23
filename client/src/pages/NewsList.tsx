@@ -8,6 +8,8 @@ import axios from 'axios';
 import { Key } from 'lucide-react';
 import SpinnerUi from '@/components/ui/spinnerUi';
 
+
+
 const NewsList = () => {
   const [news, setNews] = useState([]);
   useEffect(() => {
@@ -39,7 +41,11 @@ const NewsList = () => {
   }, [whitelistTags, blacklistTags]);
 
   if (news.length === 0) {
-    return <div><SpinnerUi/></div>;
+    return (
+      <div>
+        <SpinnerUi />
+      </div>
+    );
   }
 
   return (

@@ -7,7 +7,7 @@ type NewsCardProps = {
 };
 
 const NewsCard = ({ news }: NewsCardProps) => {
-  console.log(news);
+  
 
   return (
     <Link to={`/news/${news.id}`} className="block">
