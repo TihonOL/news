@@ -101,12 +101,12 @@ const TagList = ({ title, type, tags, onTagAdd, onTagRemove }: TagListProps) => 
                 {tag.name}
               </button>
             ))}
-            <button
+            {/* <button
               onClick={() => setShowDropdown(false)}
               className="px-3 py-1 text-sm rounded-full border border-neutral-700 text-neutral-400 hover:text-white"
             >
               Отмена
-            </button>
+            </button> */}
           </div>
         )}
       </div>
