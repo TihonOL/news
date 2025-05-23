@@ -19,7 +19,6 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const { logoutHandler, signInHandler, signUpHandler, user } = useUser();
-  
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -39,7 +38,7 @@ const App = () => {
               >
                 <Route path="/" element={<Home />} />
                 <Route path="/news" element={<NewsList />} />
-                <Route path="/news/:id" element={<NewsDetail />} />
+                <Route path="/news/:id" element={<NewsDetail user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
               </Route>
             </Route>

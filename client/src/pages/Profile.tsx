@@ -4,11 +4,10 @@ import { mockUser, mockNews } from '@/data/mockData';
 import NewsCard from '@/components/news/NewsCard';
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/axiosInstance';
+import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Profile = ({ user }) => {
-  const userFavorites = mockNews.filter((news) => mockUser.favorites.includes(news.id));
-  const userHistory = mockNews.filter((news) => mockUser.history.includes(news.id));
-
   const [favorites, setFavorites] = useState([]);
   const [history, setHistory] = useState([]);
 
@@ -21,10 +20,20 @@ const Profile = ({ user }) => {
     });
   }, []);
 
+  const handleDeleteFavorite = async () => {
+    await axiosInstance.delete('/profile/favorite/clear');
+    setFavorites([]);
+  };
 
-  
-  
-  
+  const handleDeleteHistory = async () => {
+    await axiosInstance.delete('/profile/history/delete');
+    setHistory([]);
+  };
+
+  const handleDeleteOneHistory = async () => {
+    await axiosInstance.delete('/profile/history/delete/');
+    setHistory([]);
+  };
 
   return (
     <div>
@@ -42,11 +51,34 @@ const Profile = ({ user }) => {
       <Separator className="my-8" />
 
       <div className="mb-12">
-        <h2 className="text-2xl font-bold mb-6">Избранное</h2>
-        {userFavorites.length > 0 ? (
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Избранное</h2>
+          {favorites.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-destructive hover:text-destructive/80"
+              onClick={() => handleDeleteFavorite()}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Очистить все
+            </Button>
+          )}
+        </div>
+        {favorites.length > 0 ? (
           <div className="space-y-6">
-            {favorites?.map((news) => (
-              <NewsCard key={news.id} news={news.news} />
+            {favorites.map((favorite) => (
+              <div key={favorite.news.id} className="relative group">
+                <NewsCard news={favorite.news} />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 hover:bg-destructive/10 text-destructive"
+                  // onClick={() => handleDeleteFavorite(favorite.news.id)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
             ))}
           </div>
         ) : (
@@ -57,12 +89,35 @@ const Profile = ({ user }) => {
       <Separator className="my-8" />
 
       <div>
-        <h2 className="text-2xl font-bold mb-6">История просмотров</h2>
-
-        {history?.length > 0 ? (
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">История просмотров</h2>
+          {history.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-destructive hover:text-destructive/80"
+              type="button"
+              onClick={() => handleDeleteHistory()}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Очистить все
+            </Button>
+          )}
+        </div>
+        {history.length > 0 ? (
           <div className="space-y-6">
-            {history?.map((news) => (
-              <NewsCard key={news.id} news={news.news} />
+            {history.map((item) => (
+              <div key={item.news.id} className="relative group">
+                <NewsCard news={item.news} />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 hover:bg-destructive/10 text-destructive"
+                  // onClick={() => handleDeleteHistory(item.news.id)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
             ))}
           </div>
         ) : (

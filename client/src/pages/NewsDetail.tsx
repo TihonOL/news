@@ -24,11 +24,12 @@ interface NewsItem {
   }>;
 }
 
-const NewsDetail = () => {
+const NewsDetail = ({ user }) => {
   const { id } = useParams();
   const [news, setNews] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState(false);
 
   useEffect(() => {
     axiosInstance
@@ -48,6 +49,14 @@ const NewsDetail = () => {
     //   .then((res) => console.log(res))
     //   .catch(console.log);
   }, [id]);
+
+  const handleAddToFavorites = async () => {
+    const response = await axiosInstance.post(`/profile/add-favorite/${id}`, {
+      userId: user.id,
+    });
+
+    setFavorites(true);
+  };
 
   if (loading) {
     return <div className="text-center py-12">Loading...</div>;
@@ -106,7 +115,7 @@ const NewsDetail = () => {
         <img
           src={news.imageURL}
           alt={news.title}
-          className="w-full h-64 object-cover rounded-lg mb-6"
+          className="min-w-[110%] w-[110%] h-auto max-h-64 object-contain mx-auto rounded-md"
         />
       )}
 
@@ -118,6 +127,7 @@ const NewsDetail = () => {
         <Button
           variant="default"
           className="bg-yellow-500 hover:bg-yellow-600 text-white"
+          onClick={handleAddToFavorites}
         >
           <Link to="#">Добавить в избранное</Link>
         </Button>

@@ -7,7 +7,7 @@ type NewsCardProps = {
 };
 
 const NewsCard = ({ news }: NewsCardProps) => {
-
+  console.log(news);
 
   return (
     <Link to={`/news/${news.id}`} className="block">
@@ -15,8 +15,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
         <div>
           <h3 className="text-xl font-medium mb-2">{news.title}</h3>
           <p className="text-muted-foreground text-sm">
-
-            {/* {news.original_date} */}
+            {news.original_date}
             {/* {new Date(news.date).toLocaleDateString('en-US', { 
               month: 'short', 
               day: 'numeric', 
@@ -37,9 +36,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
         {news.imageURL && (
           <div className="flex-shrink-0">
             <img
-
               src={news.imageURL}
-
               alt={news.title}
               className="w-32 h-24 object-cover rounded"
             />
