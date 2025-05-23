@@ -44,6 +44,11 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          name: 'Поsaegtsrgsergdитика',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {},
     );
