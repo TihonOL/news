@@ -31,7 +31,6 @@ class ProfileController {
     try {
       const userId = res.locals.user.id;
       const { newsId } = req.params;
-      console.log('req-params', req.params);
 
       const favorite = await ProfileService.addFavorite(userId, newsId);
       return res.status(200).json(favorite);

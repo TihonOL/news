@@ -3,9 +3,7 @@ const NewsService = require('../service/newsService');
 class NewsController {
   static getAllNews = async (req, res) => {
     try {
-      // const { title } = req.query;
       const news = await NewsService.findAllNews();
-      // console.log(news);
       res.json(news);
     } catch (error) {
       console.log(error);

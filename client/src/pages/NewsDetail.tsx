@@ -43,7 +43,6 @@ const NewsDetail = ({ user }: NewsDetailProps) => {
     center: 0,
     right: 0  
   } }; 
-  console.log({ olol, news, mockNews, id });
 
   useEffect(() => {
     if (!id) {
@@ -66,7 +65,6 @@ const NewsDetail = ({ user }: NewsDetailProps) => {
 
 
   }, [id]);
-  console.log(news?.source);
   if (news?.source === 'RBC.ru') {
     olol.bias.center = 10;
     olol.bias.left = 20;

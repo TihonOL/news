@@ -7,7 +7,6 @@ type NewsCardProps = {
 };
 
 const NewsCard = ({ news }: NewsCardProps) => {
-  // console.log(news);
   const formattedDate = news.original_date
     ? new Date(news.original_date)
         .toLocaleDateString('ru-RU', {
@@ -26,10 +25,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
         <div>
           <h3 className="text-xl font-medium mb-2">{news.title}</h3>
           <p className="text-muted-foreground text-sm">{formattedDate}</p>
-          <p className="text-muted-foreground text-sm">
 
-            {formattedDate}
-          </p>
           <p className="text-muted-foreground text-sm">
 
             Категория: {news.categories.map((el) => el.name).join(' ')}
