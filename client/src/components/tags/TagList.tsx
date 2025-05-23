@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import TagChip from './TagChip';
+import axios from 'axios';
 
 type TagListProps = {
   title: string;
@@ -55,6 +56,17 @@ const TagList = ({ title, type, tags, onTagAdd, onTagRemove }: TagListProps) => 
     };
   }, [showDropdown]);
 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('/api/categories')
+      .then((res) => setCategories(res.data)) // <--- тут тот самый res.json
+      .catch(console.error); // catch((error) => console.error(error))
+  }, []); // <--- массив зависимостей
+
+  console.log(categories);
+
   return (
     <div className="mb-8">
       <h3 className="section-heading">{title}</h3>
@@ -80,21 +92,21 @@ const TagList = ({ title, type, tags, onTagAdd, onTagRemove }: TagListProps) => 
             ref={dropdownRef}
             className="absolute left-0 mt-2 z-10 flex flex-wrap gap-2 p-3 rounded-md border bg-neutral-900 border-neutral-700 max-w-md shadow-lg"
           >
-            {POPULAR_TAGS.map((tag) => (
+            {categories.map((tag) => (
               <button
-                key={tag}
-                onClick={() => handleAdd(tag)}
+                key={tag.name}
+                onClick={() => handleAdd(tag.name)}
                 className="px-3 py-1 text-sm rounded-full border border-neutral-600 hover:bg-yellow-600 hover:text-black transition-colors duration-150"
               >
-                {tag}
+                {tag.name}
               </button>
             ))}
-            <button
+            {/* <button
               onClick={() => setShowDropdown(false)}
               className="px-3 py-1 text-sm rounded-full border border-neutral-700 text-neutral-400 hover:text-white"
             >
               Отмена
-            </button>
+            </button> */}
           </div>
         )}
       </div>
