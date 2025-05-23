@@ -7,8 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Categories
       News.belongsToMany(models.Category, {
-        through: 'NewsCategories',
+        through: models.NewsCategory,
         foreignKey: 'newsId',
+        otherKey: 'categoryId',
         as: 'categories',
       });
 
@@ -25,10 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'newsId',
         as: 'viewedByUsers',
       });
-      
     }
   }
-
 
   News.init(
     {

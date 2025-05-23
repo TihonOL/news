@@ -1,9 +1,16 @@
-const { Favorite, User, News, History } = require('../../db/models');
+const { Favorite, User, News, History, Category } = require('../../db/models');
 class ProfileService {
   static async getFavorites(userId) {
     const favorites = await Favorite.findAll({
       where: { userId },
-      include: { model: News, as: 'news' },
+      include: {
+        model: News,
+        as: 'news',
+        include: {
+          model: Category,
+          as: 'categories',
+        },
+      },
     });
 
     return favorites;
@@ -12,7 +19,14 @@ class ProfileService {
   static async getHistory(userId) {
     const history = await History.findAll({
       where: { userId },
-      include: { model: News, as: 'news' },
+      include: {
+        model: News,
+        as: 'news',
+        include: {
+          model: Category,
+          as: 'categories',
+        },
+      },
     });
     return history;
   }
@@ -63,7 +77,6 @@ class ProfileService {
       throw new Error('This news is not in history');
     }
 
-    
     return history;
   }
 }

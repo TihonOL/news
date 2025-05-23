@@ -7,20 +7,27 @@ type NewsCardProps = {
 };
 
 const NewsCard = ({ news }: NewsCardProps) => {
-  console.log(news);
+  // console.log(news);
+  const formattedDate = news.original_date
+    ? new Date(news.original_date)
+        .toLocaleDateString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+        .replace(/\//g, '.')
+    : '';
 
   return (
     <Link to={`/news/${news.id}`} className="block">
       <article className="news-card mb-4 flex justify-between items-start gap-6">
         <div>
           <h3 className="text-xl font-medium mb-2">{news.title}</h3>
+          <p className="text-muted-foreground text-sm">{formattedDate}</p>
           <p className="text-muted-foreground text-sm">
-            {news.original_date}
-            {/* {new Date(news.date).toLocaleDateString('en-US', { 
-              month: 'short', 
-              day: 'numeric', 
-              year: 'numeric' 
-            })} */}
+            Категория: {news.categories.map((el) => el.name).join(' ')}
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {/* {news.tags.map((tag) => (

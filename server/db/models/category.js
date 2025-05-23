@@ -1,4 +1,5 @@
 'use strict';
+
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -6,33 +7,37 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // News
       Category.belongsToMany(models.News, {
-        through: 'NewsCategories',
+        through: models.NewsCategory,
         foreignKey: 'categoryId',
-        as: 'news'
+        otherKey: 'newsId',
+        as: 'news',
       });
-      
+
       // User WhiteLists
       Category.belongsToMany(models.User, {
         through: 'UserWhiteLists',
         foreignKey: 'categoryId',
-        as: 'whiteListedByUsers'
+        as: 'whiteListedByUsers',
       });
-      
+
       // User BlackLists
       Category.belongsToMany(models.User, {
         through: 'UserBlackLists',
         foreignKey: 'categoryId',
-        as: 'blackListedByUsers'
+        as: 'blackListedByUsers',
       });
     }
   }
-  
-  Category.init({
-    name: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Category',
-  });
-  
+
+  Category.init(
+    {
+      name: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'Category',
+    },
+  );
+
   return Category;
 };
