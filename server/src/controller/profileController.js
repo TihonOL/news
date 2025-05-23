@@ -68,7 +68,31 @@ class ProfileController {
     try {
       const userId = res.locals.user.id;
       const history = await ProfileService.deleteHistory(userId);
-      return res.status(200).json(history);
+      return res.status(204).json(history);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Server error' });
+    }
+  }
+
+  static async deleteFavoriteById(req, res) {
+    try {
+      const { id } = req.params;
+      const userId = res.locals.user.id;
+      const deleteNewsId = await ProfileService.deleteFavoriteById(id);
+      return res.status(204).json(deleteNewsId);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Server error' });
+    }
+  }
+
+  static async deleteHistoryById(req, res) {
+    try {
+      const { id } = req.params;
+      const userId = res.locals.user.id;
+      const deleteNewsId = await ProfileService.deleteHistoryById(id);
+      return res.status(204).json(deleteNewsId);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: 'Server error' });

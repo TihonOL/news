@@ -23,6 +23,7 @@ app.use('/api/news', newsRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/whitelist', whitelistRouter);
 
+
 // app.use('/api/news', newsRouter);
 // app.use('/api/profile', profileRouter);
 
