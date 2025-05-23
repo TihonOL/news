@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import axiosInstance from '@/axiosInstance';
 
-const NewsDetail = () => {
+const NewsDetail = ({ user }) => {
   const [newsId, setNewsId] = useState([]);
+  const [favorites, setFavorites] = useState(false);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -16,13 +18,22 @@ const NewsDetail = () => {
       .get(`/api/news/${id}`)
       .then((res) => setNewsId(res.data))
       .catch(console.log);
+
+    axiosInstance
+      .post(`/profile/add-history/${id}`, { userId: user.id })
+      .then((res) => console.log(res))
+      .catch(console.log);
   }, [id]);
 
-  console.log(newsId.title);
-  console.log(newsId.original_date);
-
   const news = mockNews.find((n) => n.id === id);
-  console.log(newsId);
+
+  const handleAddToFavorites = async () => {
+    const response = await axiosInstance.post(`/profile/add-favorite/${id}`, {
+      userId: user.id,
+    });
+
+    setFavorites(true);
+  };
 
   if (!newsId) {
     return (
@@ -44,7 +55,7 @@ const NewsDetail = () => {
         </Link>
       </Button>
 
-      <h1 className="text-3xl font-bold mb-4">{news.title}</h1>
+      <h1 className="text-3xl font-bold mb-4">{newsId.title}</h1>
 
       <p className="text-muted-foreground mb-6">
         {newsId.original_date}
@@ -73,7 +84,9 @@ const NewsDetail = () => {
           variant="default"
           className="bg-yellow-500 hover:bg-yellow-600 text-white"
         >
-          <Link to="#">Добавить в избранное</Link>
+          <Link onClick={handleAddToFavorites} to="#">
+            Добавить в избранное
+          </Link>
         </Button>
 
         {/* Красная кнопка "в черный список" */}
