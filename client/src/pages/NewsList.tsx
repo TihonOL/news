@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 // import axiosInstance from '../../src/';
 import axios from 'axios';
 import { Key } from 'lucide-react';
+import SpinnerUi from '@/components/ui/spinnerUi';
 
 const NewsList = () => {
   const [news, setNews] = useState([]);
@@ -37,15 +38,15 @@ const NewsList = () => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [whitelistTags, blacklistTags]);
 
+  if (news.length === 0) {
+    return <div><SpinnerUi/></div>;
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-2">News</h1>
       {whitelistTags.length > 0 && (
         <p className="text-muted-foreground mb-8">
-          {/* размап title
-          Filtered by tags: {news.map((el) => (
-            <div key={el.id}>{el.title}</div>
-            ))} */}
           Filtered by tags: {whitelistTags.join(', ')}
         </p>
       )}
