@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import TagList from '@/components/tags/TagList';
 import { popularCategories } from '@/data/mockData';
 import { useToast } from '@/components/ui/use-toast';
+import axios from 'axios';
 
 const Home = () => {
   const { toast } = useToast();
@@ -47,6 +48,15 @@ const Home = () => {
     }
   };
 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('/api/categories')
+      .then((res) => setCategories(res.data))
+      .catch(console.error);
+  }, []);
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-2">Фильтрация новостей</h1>
@@ -75,15 +85,15 @@ const Home = () => {
       <div className="mb-8">
         <h3 className="section-heading mb-4">Популярные категории</h3>
         <div className="flex flex-wrap gap-2">
-          {popularCategories.map((category) => (
+          {categories.map((category) => (
             <Button
-              key={category}
+              key={category.name}
               variant="outline"
               size="sm"
               className="tag"
-              onClick={() => handleCategoryClick(category)}
+              onClick={() => handleCategoryClick(category.name)}
             >
-              {category}
+              {category.name}
             </Button>
           ))}
         </div>
