@@ -30,10 +30,10 @@ class ProfileController {
   static async addFavorite(req, res) {
     try {
       const userId = res.locals.user.id;
-      console.log(req.params);
-      
+      const { newsId } = req.params;
+      console.log('req-params', req.params);
 
-      const favorite = await ProfileService.addFavorite(userId);
+      const favorite = await ProfileService.addFavorite(userId, newsId);
       return res.status(200).json(favorite);
     } catch (error) {
       console.error(error);
