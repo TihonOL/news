@@ -15,6 +15,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'build', // например, изменить папку вывода на 'build'
+    outDir: '../server/dist',
   },
+  base: './',
 });
